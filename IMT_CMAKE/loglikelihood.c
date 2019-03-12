@@ -13,15 +13,18 @@ distType loglikelihood(distType likelihood[], long data_size){
 
 		if (!isfinite(likelihood[i]))
 			printf("OH NOES NONFINITE LIKELIHOOD!!!");
-
+/*
 		if (likelihood[i] < 0) {
 			printf("ERROR: loglikelihood(): L[%d] = %f < 0\n", i, likelihood[i]);
 			exit(1);
 		}
+*/
+/*
 		if (likelihood[i] > 1) {
 			printf("ERROR: loglikelihood(): L[%d] = %f > 1\n", i, likelihood[i]);
 			exit(1);
 		}
+*/
 
 		if (likelihood[i] + 0.0 == 0.0) {
 			ll = (distType)log((double)distMin);
@@ -31,8 +34,8 @@ distType loglikelihood(distType likelihood[], long data_size){
 		}
 		else if (likelihood[i] < distMin) {
 			ll = (distType)log((double)distMin);
-			printf("ERROR: loglikelihood(): L[%d] = %f < realmin\n", i, likelihood[i]);
-			exit(1);
+			printf("WARNING: loglikelihood(): L[%ld] = %f < realmin\n", i, likelihood[i]);
+			//exit(1);
 		}
 		else
 			ll = (distType) log((double)likelihood[i]);
@@ -47,7 +50,7 @@ distType loglikelihood(distType likelihood[], long data_size){
 			}
 
 			printf("]\n");
-			ll = distMin;
+			ll = 0-distMax;
 		}
 		
 		llSum += ll;
