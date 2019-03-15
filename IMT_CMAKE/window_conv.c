@@ -6,6 +6,7 @@
 #include "gsl/gsl_roots.h"
 
 #define _OLDCONV
+//#define _VERBOSE
 
 
 void get_window(const distType z[], const distType y[], long * firstIdx, long * lastIdx, long * firstYIdx, long * lastYIdx, distType threshold, unsigned long size_xyz) {
@@ -108,7 +109,7 @@ distType get_window_bisection(double m, double s, long * firstIdx, long * lastId
 		x_hi = gsl_root_fsolver_x_upper(S);
 
 		status = gsl_root_test_interval(x_lo, x_hi, 0, 0.001);
-
+#ifdef _VERBOSE
 		if (status == GSL_SUCCESS)
 			printf("Converged: :) \n");
 
@@ -116,6 +117,7 @@ distType get_window_bisection(double m, double s, long * firstIdx, long * lastId
 			iter, x_lo, x_hi,
 			r,
 			x_hi - x_lo);
+#endif
 	} while (status == GSL_CONTINUE && iter < max_iter);
 
 	gsl_root_fsolver_free(S);
@@ -140,12 +142,12 @@ void window_conv(const distType z[], const distType y[], distType C[], double h,
 	t = clock();
 
     //unsigned long size_conv = 2 * size_xyz;
-
+#ifdef _VERBOSE
 	printf("[sz=%luKB ", ((unsigned long)sizeof(distType)*size_xyz) / 1024);
-
+#endif
 	if (size_xyz > 65535)
 		printf(" WARNING ulong OVERFLOW!!! ");
-	
+
 	distType threshold = 0;
 
     for (long i = 0; i < size_xyz; i++) {
@@ -391,8 +393,9 @@ j < firstYIdx
 	double runtime = ((float)t) / CLOCKS_PER_SEC;
 
 	double megaFlopsPerSecond = (estimateOpCount / runtime) / 1000000;
-
+#ifdef _VERBOSE
 	printf("%lu size_xyz (%lu %lu , %lu %lu ) %g fullOps %g estOps %f%% skipped %f Mflop/s %fs]\n",
 		size_xyz, firstIdx, lastIdx, firstYIdx, lastYIdx,
 		maxTripCount, estimateOpCount, skipPercentage, megaFlopsPerSecond, runtime);
+#endif
 }

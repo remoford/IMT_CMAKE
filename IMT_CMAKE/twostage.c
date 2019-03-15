@@ -17,7 +17,7 @@
 #include "gsl/gsl_statistics.h"
 
 
-#define _VERBOSE
+//#define _VERBOSE
 //#define _TWOSTAGE_BINNED_MODE
 
 #ifndef typedef_cell_wrap_3
@@ -391,11 +391,14 @@ void conv2waldpdf(const distType data[], double m1, double s1, double m2, double
 	}
 
 	beginTraceFun("conv2waldpdf");
-
+#ifdef _VERBOSE
 	printf("About to find the first limit\n");
+#endif
 	long firstIdx, lastIdx;
 	distType firstLimit = get_window_bisection(m1, s1, &firstIdx, &lastIdx, 0);
+#ifdef _VERBOSE
 	printf("FIRST LIMIT = %f\n", (double)firstLimit);
+#endif
 
 	double initialH = h;
 
