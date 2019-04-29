@@ -52,6 +52,7 @@ int main(int argc, char * argv[])
 	/*
 	Error checking depends on compiler options, show the ground truth
 	*/
+/*
 	errno = 0;
 	if (math_errhandling & MATH_ERREXCEPT) feclearexcept(FE_ALL_EXCEPT);
 
@@ -66,7 +67,7 @@ int main(int argc, char * argv[])
 	}
 	errno = 0;
 	printf("\n");
-
+*/
 
 	/*
 	Parse command line arguments
